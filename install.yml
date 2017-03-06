@@ -8,7 +8,6 @@
     - name: "Install uber lib dependencies"
       pip:
         name: uber_rides
-        version: 0.4.1
     - name: "Install gmaps lib dependencies"
       pip:
         name: googlemaps
