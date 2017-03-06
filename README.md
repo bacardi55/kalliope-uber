@@ -19,7 +19,7 @@ This is due to the limited use case available by this neuron. User **can't** boo
 ## Installation
 
 ```
-kalliope install --git-url https://github.com/bacardi55/kalliope-gmaps.git
+kalliope install --git-url https://github.com/bacardi55/kalliope-uber.git
 ```
 
 This will install [uber-riders]() python library **and** google maps API. The google maps API is only needed to transform address into geolocation data (longitude/latitude). If you provide longitude / latitude data instead of address, gmaps lib won't get loaded and won't be used. Please read next section for more information
