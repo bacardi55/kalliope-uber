@@ -13,10 +13,10 @@ class Uber (NeuronModule):
         super(Uber, self).__init__(**kwargs)
 
         # Get parameters form the neuron
-        configuration = {
-            'uber_api_key': kwages.get('uber_api_key', None), 
-            'gmaps_api_key': kwages.get('gmaps_api_key', None), 
-            'drive_mode': kwages.get('drive_mode', 'uberX'), 
+        self.configuration = {
+            'uber_api_key': kwargs.get('uber_api_key', None), 
+            'gmaps_api_key': kwargs.get('gmaps_api_key', None), 
+            'drive_mode': kwargs.get('drive_mode', 'uberX'), 
             'start_latitude': kwargs.get('start_latitude', None),
             'start_longitude': kwargs.get('start_longitude', None),
             'start_address': kwargs.get('start_address', None),
@@ -31,39 +31,38 @@ class Uber (NeuronModule):
             client = UberRidesClient(session)
 
             # Get start address geocoding if needed
-            if configuration['start_address']:
-                address = _get_address(configuration['start_address'])
-                configuration['start_longitude'] = address['longitude']
-                configuration['start_latitude'] = address['latitude']
+            if self.configuration['start_address']:
+                address = self._get_address(self.configuration['start_address'])
+                self.configuration['start_longitude'] = address['longitude']
+                self.configuration['start_latitude'] = address['latitude']
 
             # Get wating time estimates 
             response = client.get_pickup_time_estimates(
-                start_latitude=configuration['start_latitude'],
-                start_longitude=configuration['start_longitude'],
+                start_latitude=self.configuration['start_latitude'],
+                start_longitude=self.configuration['start_longitude'],
             )
 
             message = {}
 
             time = response.json.get('times')
             for t in time:
-                if t['display_name'] == configuration['drive_mode']:
-                    print t
+                if t['display_name'] == self.configuration['drive_mode']:
                     message['driving_mode'] = t['display_name']
-                    message['time_to_get_driver'] = t['estimate']
+                    message['time_to_get_driver'] = t['estimate'] / 60
 
 
-            if configuration['end_address']:
+            if self.configuration['end_address']:
                 # Get from address geocoding
-                address = _get_address(configuration['end_address'])
-                configuration['end_longitude'] = address['longitude']
-                configuration['end_latitude'] = address['latitude']
+                address = self._get_address(self.configuration['end_address'])
+                self.configuration['end_longitude'] = address['longitude']
+                self.configuration['end_latitude'] = address['latitude']
 
                 # Get price and time for the ride
                 response = client.get_price_estimates(
-                    start_latitude=configuration['start_latitude'],
-                    start_longitude=configuration['start_longitude'],
-                    end_latitude=configuration['end_latitude'],
-                    end_longitude=configuration['end_longitude']
+                    start_latitude=self.configuration['start_latitude'],
+                    start_longitude=self.configuration['start_longitude'],
+                    end_latitude=self.configuration['end_latitude'],
+                    end_longitude=self.configuration['end_longitude']
                 )
 
                 estimate = response.json.get('prices')
@@ -71,13 +70,12 @@ class Uber (NeuronModule):
 
                 # Get price estimates and time estimates
                 for e in estimate:
-                    if e['display_name'] == configuration['drive_mode']:
-                        print e
+                    if e['display_name'] == self.configuration['drive_mode']:
                         message['ride'] = {
                             'distance': e['distance'],
-                            'high_estimate': e['high_estimate'],
-                            'low_estimate': e['low_estimate'],
-                            'duration': e['duration'],
+                            'high_estimate': int(e['high_estimate']),
+                            'low_estimate': int(e['low_estimate']),
+                            'duration': e['duration'] / 60,
                             'estimate': e['estimate'],
                         }
 
@@ -108,12 +106,12 @@ class Uber (NeuronModule):
         if self.configuration['uber_api_key'] is None:
             raise InvalidParameterException("Uber neuronrequire an Uber API key")
 
-        if configuration['start_address'] is None \
-            and (configuration['start_longitude'] is None or configuration['start_latitude'] is None):
+        if self.configuration['start_address'] is None \
+            and (self.configuration['start_longitude'] is None or self.configuration['start_latitude'] is None):
             raise InvalidParameterException("Missing start_address or start longitude and latitude")
 
-        if (configuration['start_address'] or configuration['end_address']) \
-            and configuration['gmaps_api_key'] is None:
+        if (self.configuration['start_address'] or self.configuration['end_address']) \
+            and self.configuration['gmaps_api_key'] is None:
             raise InvalidParameterException('To transform start or end address into longitute and latitude, a gmaps API key is required')
 
 
