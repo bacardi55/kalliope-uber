@@ -1,4 +1,4 @@
-# kalliope-mpd
+# kalliope-uber
 
 A neuron to leverage Uber API
 
