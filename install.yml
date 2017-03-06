@@ -7,7 +7,7 @@
   tasks:
     - name: "Install uber lib dependencies"
       pip:
-        name: uber-rides
+        name: uber_rides
         version: 0.4.1
     - name: "Install gmaps lib dependencies"
       pip:
