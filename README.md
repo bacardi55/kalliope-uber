@@ -9,7 +9,7 @@ Use Uber API to:
 * Get the time needed for a driver to arrive at your starting address
 * Get the price and duration of a ride from starting address to end address
 
-You need to enable [uber API]() for this.
+You need to enable [uber API](https://developer.uber.com/dashboard) for this. More information [here](https://developer.uber.com/docs/riders/introduction).
 
 This neuron only leverage the server token and not a end user oauth2 connection per user.
 
@@ -22,21 +22,21 @@ This is due to the limited use case available by this neuron. User **can't** boo
 kalliope install --git-url https://github.com/bacardi55/kalliope-uber.git
 ```
 
-This will install [uber-riders]() python library **and** google maps API. The google maps API is only needed to transform address into geolocation data (longitude/latitude). If you provide longitude / latitude data instead of address, gmaps lib won't get loaded and won't be used. Please read next section for more information
+This will install [uber-riders](https://github.com/uber/rides-python-sdk) python library **and** [google maps python lib](https://github.com/googlemaps/google-maps-services-python). The google maps API is only needed to transform address into geolocation data (longitude/latitude). If you provide longitude / latitude data instead of address, gmaps lib won't get loaded and won't be used. Please read next section for more information
 
 ## Options
 
-| parameter       | required | default | choices | comment                                                                                                 |
-|-----------------|----------|---------|---------|---------------------------------------------------------------------------------------------------------|
-| uber_api_key    | yes      |         | string  | The api key to use uber API. See below.                                                                 |
-| gmaps_api_key   | no       |         | string  | The api key to use googlemaps API. See below.                                                           |
-| drive_mode	  | yes      | uberX   | string  | The drive mode: uberX, uberBlack, pool', ... [Complete list here]()                                     |
-| start_latitude  | no       |         | string  | The latitude of the start / origin address                                                              |
-| start_longitude | no       |         | string  | The longitude of the start / origin address                                                             |
-| start_address   | no       |         | string  | The full text start / origin address                                                                    |
-| end_latitude    | no       |         | string  | The latitude of the destination address                                                                 |
-| end_longitude   | no       |         | string  | The longitude of the destination address                                                                |
-| end_address     | no       |         | string  | The full text destination address                                                                       |
+| parameter       | required | default | choices | comment                                                              |
+|-----------------|----------|---------|---------|----------------------------------------------------------------------|
+| uber_api_key    | yes      |         | string  | The api key to use uber API. See below.                              |
+| gmaps_api_key   | no       |         | string  | The api key to use googlemaps API. See below.                        |
+| drive_mode	  | yes      | uberX   | string  | The drive mode: uberX, uberBlack, pool', ... [Complete list here](https://developer.uber.com/docs/riders/references/api/v1.2/products-get)  |
+| start_latitude  | no       |         | string  | The latitude of the start / origin address                           |
+| start_longitude | no       |         | string  | The longitude of the start / origin address                          |
+| start_address   | no       |         | string  | The full text start / origin address                                 |
+| end_latitude    | no       |         | string  | The latitude of the destination address                              |
+| end_longitude   | no       |         | string  | The longitude of the destination address                             |
+| end_address     | no       |         | string  | The full text destination address                                    |
 
 
 **Additional notes**:
@@ -44,7 +44,7 @@ This will install [uber-riders]() python library **and** google maps API. The go
 * If start_address is given, Gmaps will be used to get geolocation data and will replace the given start_{longitude,latitude} if any
 * If end_address is given, Gmaps will be used to get geolocation data and will replace the given end_{longitude,latitude} if any
 * If either start_address or end_address is given, gmaps_api_key is mandatory.
-* If you want to use the gmaps geolocation api, you need to enable the [Google Maps geolocation API]()
+* If you want to use the gmaps geolocation api, you need to enable the [Google Maps geolocation API](https://developers.google.com/maps/documentation/geocoding/intro)
 
 
 ## Return Values
