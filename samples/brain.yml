@@ -27,7 +27,7 @@
 
   - name: "Uber-time-and-price"
     signals:
-      - order: "how much for a rider to work"
+      - order: "how much for a ride to work"
     neurons:
       - say:
           message: "Calculating"
@@ -42,7 +42,7 @@
  
   - name: "Uber-time-and-price-by-addresses"
     signals:
-      - order: "how much for a rider to {{end_address}}"
+      - order: "how much for a ride to {{end_address}}"
     neurons:
       - say:
           message: "Calculating"
