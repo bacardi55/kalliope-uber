@@ -132,8 +132,8 @@ Get the estimated time to get a ```driving_mode```, the price and the ride durat
           start_address: "*********"
           driving_mode: "uberX"
           say_template: "A {{driving_mode}} driver can be there in {{ time_to_get_driver }} minutes. Traject will take about {{ duration }} and would cost {{ estimate }}"
-          args:
-              - end_address
+          end_address: "{{end_address}}"
+
 ```
 
 Get the estimated time to get a ```driving_mode```, the price and the ride duration based on addresses given in arguments
@@ -150,9 +150,8 @@ Get the estimated time to get a ```driving_mode```, the price and the ride durat
           gmaps_api_key: "**********************"
           driving_mode: "uberX"
           say_template: "A {{driving_mode}} driver can be there in {{ time_to_get_driver }} minutes. Traject will take about {{ duration }} and would cost {{ estimate }}"
-          args:
-              - start_address
-              - end_address
+          start_address: "{{start_address}}"
+          end_address: "{{end_address}}"
 ```
 
 
