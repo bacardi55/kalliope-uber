@@ -20,5 +20,4 @@
           start_address: "*********"
           driving_mode: "uberX"
           say_template: "The ride will take about {{ride.duration}} and will cost between {{ride.low_estimate}} and {{ride.high_estimate}}. A {{driving_mode}} driver can be here in {{time_to_get_driver}} minutes"
-          args:
-              - end_address
+          end_address: "{{end_address}}"
