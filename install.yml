@@ -11,4 +11,4 @@
     - name: "Install gmaps lib dependencies"
       pip:
         name: googlemaps
-        version: 2.4.5
+        version: 2.5.1
